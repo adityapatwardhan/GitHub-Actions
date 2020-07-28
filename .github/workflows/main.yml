@@ -26,3 +26,90 @@ jobs:
       with:
         name: pester-results-${{ matrix.os }}
         path: ${{ steps.pester.outputs.logPath }}
+
+    - name: Script is a file
+      run: '::set-env name=TestName::ScriptIsFile'
+    - name: Pester Action
+      id: pester
+      uses: ./PesterActionV1
+      with:
+        script: 'tests/sample/sample.tests.ps1'
+
+    - name: Pass empty value for script
+      run: '::set-env name=TestName::ScriptNull'
+    - name: Pester Action
+      id: pester
+      uses: ./PesterActionV1
+      with:
+        script: ''
+
+    - name: Pass non existent path
+      run: '::set-env name=TestName::ScriptNotExist'
+    - name: Pester Action
+      id: pester
+      uses: ./PesterActionV1
+      with:
+        script: 'tests/notexists'
+
+    - name: Pester version 5.0.0
+      run: '::set-env name=TestName::Pester500'
+    - name: Pester Action
+      id: pester
+      uses: ./PesterActionV1
+      with:
+        version: '5.0.0'
+
+    - name: Pester version 4.10.1
+      run: '::set-env name=TestName::Pester4101'
+    - name: Pester Action
+      id: pester
+      uses: ./PesterActionV1
+      with:
+        version: '4.10.1'
+
+    - name: Pester non existing version
+      run: '::set-env name=TestName::PesterNonExistingVersion'
+    - name: Pester Action
+      id: pester
+      uses: ./PesterActionV1
+      with:
+        version: '100.100.100'
+
+    - name: Pester version null
+      run: '::set-env name=TestName::PesterVersionNull'
+    - name: Pester Action
+      id: pester
+      uses: ./PesterActionV1
+      with:
+        version: ''
+
+    - name: Pester version not number
+      run: '::set-env name=TestName::PesterVersionNotNumber'
+    - name: Pester Action
+      id: pester
+      uses: ./PesterActionV1
+      with:
+        version: 'a.b.c'
+
+    - name: Log format is NUnitXml
+      run: '::set-env name=TestName::LogFormatNUnitXml'
+    - name: Pester Action
+      id: pester
+      uses: ./PesterActionV1
+      with:
+        logformat: 'NUnitXml'
+
+    - name: Log format is JUnitXml
+      run: '::set-env name=TestName::LogFormatJUnitXml'
+    - name: Pester Action
+      id: pester
+      uses: ./PesterActionV1
+      with:
+        logformat: 'JUnitXml'
+
+    - name: All defaults
+      run: '::set-env name=TestName::AllDefaults'
+    - name: Pester Action
+      id: pester
+      uses: ./PesterActionV1
+
